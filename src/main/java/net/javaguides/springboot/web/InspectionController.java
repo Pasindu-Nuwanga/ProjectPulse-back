@@ -1,5 +1,6 @@
 package net.javaguides.springboot.web;
 
+import net.javaguides.springboot.model.Document;
 import net.javaguides.springboot.model.Inspection;
 import net.javaguides.springboot.service.InspectionServiceImpl;
 import net.javaguides.springboot.web.dto.InspectionRequestDto;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,7 @@ public class InspectionController {
         try {
             Inspection savedInspection = inspectionService.submitInspectionRequest(requestDto);
             return ResponseEntity.ok("Inspection request submitted successfully with ID: " + savedInspection.getInspectionId());
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace(); // Handle exceptions as needed
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error submitting inspection request.");
         }
@@ -35,6 +37,23 @@ public class InspectionController {
     @GetMapping("/inspection/request/find")
     public List<Inspection> getInspectionRequests() {
         return inspectionService.getAllInspectionRequests();
+    }
+
+    @GetMapping("/inspection/request/find-by-phase/{phaseName}")
+    public List<Inspection> getInspectionRequestsByPhase(@PathVariable String phaseName) {
+        return inspectionService.getInspectionRequestsByPhase(phaseName);
+    }
+
+    @GetMapping("/inspection/request/download/{fileName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) {
+        byte[] fileData = inspectionService.getFileDataByFileName(fileName);
+        if (fileData != null) {
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + fileName)
+                    .body(fileData);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
 }

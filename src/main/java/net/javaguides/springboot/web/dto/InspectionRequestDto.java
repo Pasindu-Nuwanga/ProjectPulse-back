@@ -12,6 +12,7 @@ public class InspectionRequestDto {
     private String constructionType;
     private MultipartFile fileAttachment;
 
+
     public InspectionRequestDto() {
     }
 
@@ -22,6 +23,8 @@ public class InspectionRequestDto {
         this.constructionType = constructionType;
         this.fileAttachment = fileAttachment;
     }
+
+
 
     public String getInspectionName() {
         return inspectionName;

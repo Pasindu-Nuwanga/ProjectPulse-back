@@ -20,6 +20,16 @@ public class Inspection {
     @Lob
     private byte[] fileAttachment;
 
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "phase_id", referencedColumnName = "phase_id")
     private Phase phases;
@@ -104,4 +114,6 @@ public class Inspection {
                 ", phases=" + phases +
                 '}';
     }
+
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,8 @@ public class InspectionServiceImpl {
         inspection.setPhaseSection(requestDto.getPhaseSection());
         inspection.setConstructionType(requestDto.getConstructionType());
         inspection.setPhases(phase);
+        inspection.setInspectionRequestDate(requestDto.getInspectionRequestDate());
+        inspection.setInspectionDate(requestDto.getInspectionDate());
 
         MultipartFile fileAttachment = requestDto.getFileAttachment();
         if (fileAttachment != null && !fileAttachment.isEmpty()) {
@@ -62,5 +65,6 @@ public class InspectionServiceImpl {
     public List<Inspection> getInspectionsByPhase(Integer phaseId) {
         return inspectionRepository.findByPhasesPhaseId(phaseId);
     }
+
 
 }

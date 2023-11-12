@@ -1,5 +1,7 @@
 package net.javaguides.springboot.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Date;
@@ -15,7 +17,9 @@ public class Inspection {
     private String inspectionName;
     private String phaseSection;
     private String constructionType;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date inspectionRequestDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date inspectionDate;
 
     @Lob

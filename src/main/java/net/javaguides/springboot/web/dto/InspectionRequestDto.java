@@ -1,5 +1,6 @@
 package net.javaguides.springboot.web.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
@@ -12,19 +13,40 @@ public class InspectionRequestDto {
     private String constructionType;
     private MultipartFile fileAttachment;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date inspectionRequestDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date inspectionDate;
+
 
     public InspectionRequestDto() {
     }
 
-    public InspectionRequestDto(String inspectionName, String phaseSection, String phaseName, String constructionType, MultipartFile fileAttachment) {
+    public InspectionRequestDto(String inspectionName, String phaseSection, String phaseName, String constructionType, MultipartFile fileAttachment, Date inspectionRequestDate, Date inspectionDate) {
         this.inspectionName = inspectionName;
         this.phaseSection = phaseSection;
         this.phaseName = phaseName;
         this.constructionType = constructionType;
         this.fileAttachment = fileAttachment;
+        this.inspectionRequestDate = inspectionRequestDate;
+        this.inspectionDate = inspectionDate;
     }
 
+    public Date getInspectionRequestDate() {
+        return inspectionRequestDate;
+    }
 
+    public void setInspectionRequestDate(Date inspectionRequestDate) {
+        this.inspectionRequestDate = inspectionRequestDate;
+    }
+
+    public Date getInspectionDate() {
+        return inspectionDate;
+    }
+
+    public void setInspectionDate(Date inspectionDate) {
+        this.inspectionDate = inspectionDate;
+    }
 
     public String getInspectionName() {
         return inspectionName;
@@ -74,6 +96,8 @@ public class InspectionRequestDto {
                 ", phaseName='" + phaseName + '\'' +
                 ", constructionType='" + constructionType + '\'' +
                 ", fileAttachment=" + fileAttachment +
+                ", inspectionRequestDate=" + inspectionRequestDate +
+                ", inspectionDate=" + inspectionDate +
                 '}';
     }
 }

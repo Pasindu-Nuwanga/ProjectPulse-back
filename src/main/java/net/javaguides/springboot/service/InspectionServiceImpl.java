@@ -59,8 +59,8 @@ public class InspectionServiceImpl {
         return null;
     }
 
-    public List<Inspection> getInspectionRequestsByPhase(String phaseName) {
-        return inspectionRepository.findByPhases_PhaseName(phaseName);
+    public List<Inspection> getInspectionsByPhase(Integer phaseId) {
+        return inspectionRepository.findByPhasesPhaseId(phaseId);
     }
 
 }

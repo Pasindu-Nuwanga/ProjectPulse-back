@@ -10,5 +10,6 @@ public interface InspectionRepository extends JpaRepository<Inspection, Integer>
 
     Inspection findByFileName(String fileName);
 
-    List<Inspection> findByPhases_PhaseName(String phaseName);
+    List<Inspection> findByPhasesPhaseId(Integer phaseId);
+
 }

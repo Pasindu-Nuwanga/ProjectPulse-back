@@ -39,9 +39,9 @@ public class InspectionController {
         return inspectionService.getAllInspectionRequests();
     }
 
-    @GetMapping("/inspection/request/find-by-phase/{phaseName}")
-    public List<Inspection> getInspectionRequestsByPhase(@PathVariable String phaseName) {
-        return inspectionService.getInspectionRequestsByPhase(phaseName);
+    @GetMapping("/inspection/request/byPhase/{phaseId}")
+    public List<Inspection> getInspectionsByPhase(@PathVariable Integer phaseId) {
+        return inspectionService.getInspectionsByPhase(phaseId);
     }
 
     @GetMapping("/inspection/request/download/{fileName}")
@@ -55,5 +55,6 @@ public class InspectionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
 
 }

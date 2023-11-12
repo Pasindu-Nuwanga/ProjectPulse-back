@@ -15,6 +15,7 @@ public class Inspection {
     private String inspectionName;
     private String phaseSection;
     private String constructionType;
+    private Date inspectionRequestDate;
     private Date inspectionDate;
 
     @Lob
@@ -37,13 +38,23 @@ public class Inspection {
     public Inspection() {
     }
 
-    public Inspection(String inspectionName, String phaseSection, String constructionType, Date inspectionDate, byte[] fileAttachment, Phase phases) {
+    public Inspection(String inspectionName, String phaseSection, String constructionType, Date inspectionRequestDate, Date inspectionDate, byte[] fileAttachment, String fileName, Phase phases) {
         this.inspectionName = inspectionName;
         this.phaseSection = phaseSection;
         this.constructionType = constructionType;
+        this.inspectionRequestDate = inspectionRequestDate;
         this.inspectionDate = inspectionDate;
         this.fileAttachment = fileAttachment;
+        this.fileName = fileName;
         this.phases = phases;
+    }
+
+    public Date getInspectionDate() {
+        return inspectionDate;
+    }
+
+    public void setInspectionDate(Date inspectionDate) {
+        this.inspectionDate = inspectionDate;
     }
 
     public Integer getInspectionId() {
@@ -78,12 +89,12 @@ public class Inspection {
         this.constructionType = constructionType;
     }
 
-    public Date getInspectionDate() {
-        return inspectionDate;
+    public Date getInspectionRequestDate() {
+        return inspectionRequestDate;
     }
 
-    public void setInspectionDate(Date inspectionDate) {
-        this.inspectionDate = inspectionDate;
+    public void setInspectionRequestDate(Date inspectionRequestDate) {
+        this.inspectionRequestDate = inspectionRequestDate;
     }
 
     public byte[] getFileAttachment() {
@@ -109,7 +120,7 @@ public class Inspection {
                 ", inspectionName='" + inspectionName + '\'' +
                 ", phaseSection='" + phaseSection + '\'' +
                 ", constructionType='" + constructionType + '\'' +
-                ", inspectionDate=" + inspectionDate +
+                ", inspectionDate=" + inspectionRequestDate +
                 ", data=" + Arrays.toString(fileAttachment) +
                 ", phases=" + phases +
                 '}';

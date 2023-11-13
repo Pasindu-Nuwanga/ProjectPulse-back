@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -64,6 +65,17 @@ public class InspectionServiceImpl {
 
     public List<Inspection> getInspectionsByPhase(Integer phaseId) {
         return inspectionRepository.findByPhasesPhaseId(phaseId);
+    }
+
+    public Inspection updateInspectionDate(Integer inspectionId, Date newInspectionDate) {
+        Optional<Inspection> optionalInspection = inspectionRepository.findById(inspectionId);
+        if (optionalInspection.isPresent()) {
+            Inspection inspection = optionalInspection.get();
+            inspection.setInspectionDate(newInspectionDate);
+            return inspectionRepository.save(inspection);
+        } else {
+            throw new IllegalArgumentException("Inspection not found with ID: " + inspectionId);
+        }
     }
 
 

@@ -5,11 +5,13 @@ import net.javaguides.springboot.model.Inspection;
 import net.javaguides.springboot.service.InspectionServiceImpl;
 import net.javaguides.springboot.web.dto.InspectionRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,5 +58,20 @@ public class InspectionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @PutMapping("/inspection/request/updateDate/{inspectionId}")
+    public ResponseEntity<String> updateInspectionDate(
+            @PathVariable Integer inspectionId,
+            @RequestBody Date newInspectionDate) {
+        try {
+            Inspection updatedInspection = inspectionService.updateInspectionDate(inspectionId, newInspectionDate);
+            return ResponseEntity.ok("Inspection date updated successfully for ID: " + updatedInspection.getInspectionId());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+
+
 
 }

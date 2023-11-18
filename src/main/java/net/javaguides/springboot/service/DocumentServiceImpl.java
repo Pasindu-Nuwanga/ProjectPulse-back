@@ -4,16 +4,13 @@ import net.javaguides.springboot.exception.FileNotFoundException;
 import net.javaguides.springboot.exception.FileStorageException;
 import net.javaguides.springboot.model.Document;
 import net.javaguides.springboot.model.Phase;
-import net.javaguides.springboot.model.Project;
 import net.javaguides.springboot.repository.DocumentRepository;
 import net.javaguides.springboot.repository.PhaseRepository;
-import net.javaguides.springboot.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
@@ -77,5 +74,6 @@ public class DocumentServiceImpl{
     public List<Document> getDocumentsByPhaseId(Integer phaseId) {
         return documentRepository.findByPhasesPhaseId(phaseId);
     }
+
 
 }

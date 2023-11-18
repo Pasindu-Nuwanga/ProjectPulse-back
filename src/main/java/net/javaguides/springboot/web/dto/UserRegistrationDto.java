@@ -8,7 +8,6 @@ public class UserRegistrationDto {
 	private String email;
 	private String password;
 	private Integer roleId;
-
 	private Integer projectId;
 	
 	public UserRegistrationDto(){

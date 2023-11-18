@@ -19,9 +19,10 @@ public class Document {
     @Lob
     private byte[] data;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "phase_id", referencedColumnName = "phase_id")
     private Phase phases;
+
 
     public Document() {
     }

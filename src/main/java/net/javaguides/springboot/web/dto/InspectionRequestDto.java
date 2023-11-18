@@ -19,6 +19,20 @@ public class InspectionRequestDto {
     private Date inspectionDate;
 
 
+
+    @Override
+    public String toString() {
+        return "InspectionRequestDto{" +
+                "inspectionName='" + inspectionName + '\'' +
+                ", phaseSection='" + phaseSection + '\'' +
+                ", phaseName='" + phaseName + '\'' +
+                ", constructionType='" + constructionType + '\'' +
+                ", fileAttachment=" + fileAttachment +
+                ", inspectionRequestDate=" + inspectionRequestDate +
+                ", inspectionDate=" + inspectionDate +
+                '}';
+    }
+
     public InspectionRequestDto() {
     }
 
@@ -88,16 +102,4 @@ public class InspectionRequestDto {
         this.fileAttachment = fileAttachment;
     }
 
-    @Override
-    public String toString() {
-        return "InspectionRequestDto{" +
-                "inspectionName='" + inspectionName + '\'' +
-                ", phaseSection='" + phaseSection + '\'' +
-                ", phaseName='" + phaseName + '\'' +
-                ", constructionType='" + constructionType + '\'' +
-                ", fileAttachment=" + fileAttachment +
-                ", inspectionRequestDate=" + inspectionRequestDate +
-                ", inspectionDate=" + inspectionDate +
-                '}';
-    }
 }

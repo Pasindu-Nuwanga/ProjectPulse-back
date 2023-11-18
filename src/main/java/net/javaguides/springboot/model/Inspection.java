@@ -27,14 +27,6 @@ public class Inspection {
 
     private String fileName;
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "phase_id", referencedColumnName = "phase_id")
     private Phase phases;
@@ -109,6 +101,14 @@ public class Inspection {
         this.fileAttachment = fileAttachment;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public Phase getPhases() {
         return phases;
     }
@@ -124,8 +124,10 @@ public class Inspection {
                 ", inspectionName='" + inspectionName + '\'' +
                 ", phaseSection='" + phaseSection + '\'' +
                 ", constructionType='" + constructionType + '\'' +
-                ", inspectionDate=" + inspectionRequestDate +
-                ", data=" + Arrays.toString(fileAttachment) +
+                ", inspectionRequestDate=" + inspectionRequestDate +
+                ", inspectionDate=" + inspectionDate +
+                ", fileAttachment=" + Arrays.toString(fileAttachment) +
+                ", fileName='" + fileName + '\'' +
                 ", phases=" + phases +
                 '}';
     }

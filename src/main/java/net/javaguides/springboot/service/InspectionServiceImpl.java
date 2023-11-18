@@ -7,6 +7,7 @@ import net.javaguides.springboot.repository.DocumentRepository;
 import net.javaguides.springboot.repository.InspectionRepository;
 import net.javaguides.springboot.repository.PhaseRepository;
 import net.javaguides.springboot.web.dto.InspectionRequestDto;
+import net.javaguides.springboot.web.dto.InspectionResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -77,6 +78,5 @@ public class InspectionServiceImpl {
             throw new IllegalArgumentException("Inspection not found with ID: " + inspectionId);
         }
     }
-
 
 }

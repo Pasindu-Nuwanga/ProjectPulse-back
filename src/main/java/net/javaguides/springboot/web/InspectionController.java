@@ -2,8 +2,10 @@ package net.javaguides.springboot.web;
 
 import net.javaguides.springboot.model.Document;
 import net.javaguides.springboot.model.Inspection;
+import net.javaguides.springboot.model.Phase;
 import net.javaguides.springboot.service.InspectionServiceImpl;
 import net.javaguides.springboot.web.dto.InspectionRequestDto;
+import net.javaguides.springboot.web.dto.InspectionResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -71,7 +73,9 @@ public class InspectionController {
         }
     }
 
-
-
+    @GetMapping("/api/phases/{phaseId}/inspections")
+    public List<Inspection> getPhasesByProjectId(@PathVariable Integer phaseId) {
+        return inspectionService.getInspectionsByPhase(phaseId);
+    }
 
 }

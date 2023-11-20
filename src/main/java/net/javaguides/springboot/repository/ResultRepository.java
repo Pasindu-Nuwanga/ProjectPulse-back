@@ -16,5 +16,6 @@ public interface ResultRepository extends JpaRepository<Result, Integer> {
 
     List<Result> findByInspectionsInspectionName(String inspectionName);
 
-    List<Result> findByInspectionsInspectionId(Integer phaseId);
+    public List<Result> findByInspectionsPhasesPhaseId(Integer phaseId);
+
 }

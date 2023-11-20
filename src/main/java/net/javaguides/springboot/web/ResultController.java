@@ -41,7 +41,7 @@ public class ResultController {
     }
 
     @GetMapping("/inspection/result/byPhase/{phaseId}")
-    public List<Result> getInspectionsByPhase(@PathVariable Integer phaseId) {
+    public List<Result> getResultsByPhase(@PathVariable Integer phaseId) {
         return resultService.getResultsByPhase(phaseId);
     }
 

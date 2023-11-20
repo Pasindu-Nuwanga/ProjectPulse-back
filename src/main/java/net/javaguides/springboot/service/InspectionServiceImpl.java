@@ -39,7 +39,11 @@ public class InspectionServiceImpl {
         inspection.setConstructionType(requestDto.getConstructionType());
         inspection.setPhases(phase);
         inspection.setInspectionRequestDate(requestDto.getInspectionRequestDate());
-        inspection.setInspectionDate(requestDto.getInspectionDate());
+
+        // Check if inspectionDate is provided before setting it
+        if (requestDto.getInspectionDate() != null) {
+            inspection.setInspectionDate(requestDto.getInspectionDate());
+        }
 
         MultipartFile fileAttachment = requestDto.getFileAttachment();
         if (fileAttachment != null && !fileAttachment.isEmpty()) {

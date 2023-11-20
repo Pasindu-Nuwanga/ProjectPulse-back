@@ -44,8 +44,7 @@ public class ResultServiceImpl {
 
             return resultRepository.save(result);
         } else {
-            // Handle the case when no inspections are found with the given name
-            // You might want to throw an exception or handle it based on your business logic
+
             return null;
         }
     }
@@ -66,7 +65,8 @@ public class ResultServiceImpl {
 
     //Get results by inspection id
     public List<Result> getResultsByPhase(Integer phaseId) {
-        return resultRepository.findByInspectionsInspectionId(phaseId);
+        return resultRepository.findByInspectionsPhasesPhaseId(phaseId);
+
     }
 
 

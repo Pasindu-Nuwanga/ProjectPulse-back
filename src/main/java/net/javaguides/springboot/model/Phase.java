@@ -14,7 +14,7 @@ public class Phase {
     private Integer phaseId;
     private String phaseName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 

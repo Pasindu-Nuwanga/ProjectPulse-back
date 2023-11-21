@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.deser.NullValueProvider;
 import net.javaguides.springboot.exception.InvalidCredentialsException;
+import net.javaguides.springboot.model.Phase;
 import net.javaguides.springboot.model.Project;
 import net.javaguides.springboot.repository.ProjectRepository;
 import net.javaguides.springboot.repository.RoleRepository;
@@ -151,6 +152,10 @@ public class UserServiceImpl{
 
 		return new org.springframework.security.core.userdetails.User(
 				user.getEmail(), user.getPassword(), authorities);
+	}
+
+	public List<User> getUsersByProjectId(Integer projectId) {
+		return userRepository.findByProjectsProjectId(projectId);
 	}
 
 	public User getUserById(Integer userId) {

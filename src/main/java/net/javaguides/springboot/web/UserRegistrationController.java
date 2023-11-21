@@ -1,6 +1,7 @@
 package net.javaguides.springboot.web;
 
 import net.javaguides.springboot.exception.InvalidCredentialsException;
+import net.javaguides.springboot.model.Phase;
 import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.response.LoginResponse;
 import net.javaguides.springboot.service.UserServiceImpl;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import net.javaguides.springboot.web.dto.UserRegistrationDto;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -62,6 +65,11 @@ public class UserRegistrationController {
 			// Return a 404 Not Found response if the user was not found
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+	}
+
+	@GetMapping("/users/{projectId}")
+	public List<User> getUsersByProjectId(@PathVariable Integer projectId) {
+		return userService.getUsersByProjectId(projectId);
 	}
 
 	//Update Password

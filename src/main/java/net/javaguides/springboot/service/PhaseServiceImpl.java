@@ -55,4 +55,18 @@ public class PhaseServiceImpl {
         return phaseRepository.findByProjectProjectId(projectId);
     }
 
+
+    public PhaseDto editPhaseName(Integer phaseId, String newPhaseName) {
+        // Check if the phase exists
+        Phase phase = phaseRepository.findById(phaseId)
+                .orElseThrow(() -> new EntityNotFoundException("Phase not found with id: " + phaseId));
+
+        // Update the phase name
+        phase.setPhaseName(newPhaseName);
+        phaseRepository.save(phase);
+
+        // Return the updated PhaseDto
+        return new PhaseDto(phase.getPhaseId(), phase.getPhaseName(), phase.getProject().getProjectName());
+    }
+
 }

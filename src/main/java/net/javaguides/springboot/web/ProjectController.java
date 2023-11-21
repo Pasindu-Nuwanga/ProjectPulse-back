@@ -1,12 +1,14 @@
 package net.javaguides.springboot.web;
 
 import net.javaguides.springboot.service.ProjectServiceImpl;
+import net.javaguides.springboot.web.dto.PhaseDto;
 import net.javaguides.springboot.web.dto.ProjectDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -43,6 +45,19 @@ public class ProjectController {
         } catch (Exception e) {
             // Handle exceptions and return an appropriate error response
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // Edit the name of a phase
+    @PutMapping("edit/projects/{projectId}")
+    public ResponseEntity<String> editProjectName(@PathVariable Integer projectId, @RequestBody ProjectDto projectDto) {
+        try {
+            ProjectDto updatedProject = projectService.editProjectName(projectId, projectDto.getProjectName());
+            return ResponseEntity.ok("Phase name is updated successfully!");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body("Phase not found: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to edit phase name: " + e.getMessage());
         }
     }
 

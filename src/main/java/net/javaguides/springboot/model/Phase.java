@@ -18,6 +18,7 @@ public class Phase {
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private Project project;
 
+
     public Phase() {
     }
 

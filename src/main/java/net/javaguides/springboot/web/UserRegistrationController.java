@@ -1,9 +1,11 @@
 package net.javaguides.springboot.web;
 
+import net.javaguides.springboot.exception.InvalidCredentialsException;
 import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.response.LoginResponse;
 import net.javaguides.springboot.service.UserServiceImpl;
 import net.javaguides.springboot.web.dto.LoginDto;
+import net.javaguides.springboot.web.dto.PasswordUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +63,22 @@ public class UserRegistrationController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
+
+	//Update Password
+	@PostMapping("/change-password")
+	public ResponseEntity<String> changePassword(@RequestBody PasswordUpdateDto passwordUpdateDto) {
+		try {
+			userService.changePassword(
+					passwordUpdateDto.getEmail(),
+					passwordUpdateDto.getOldPassword(),
+					passwordUpdateDto.getNewPassword());
+			return ResponseEntity.ok("Password changed successfully.");
+		} catch (InvalidCredentialsException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during password change.");
+		}
+	}
+
 
 }

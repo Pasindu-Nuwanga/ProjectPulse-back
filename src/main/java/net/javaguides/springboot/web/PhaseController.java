@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,5 +44,19 @@ public class PhaseController {
     public List<Phase> getPhasesByProjectId(@PathVariable Integer projectId) {
         return phaseService.getPhasesByProjectId(projectId);
     }
+
+    // Edit the name of a phase
+    @PutMapping("edit/phases/{phaseId}")
+    public ResponseEntity<String> editPhaseName(@PathVariable Integer phaseId, @RequestBody PhaseDto phaseDto) {
+        try {
+            PhaseDto updatedPhase = phaseService.editPhaseName(phaseId, phaseDto.getPhaseName());
+            return ResponseEntity.ok("Phase name is updated successfully!");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body("Phase not found: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to edit phase name: " + e.getMessage());
+        }
+    }
+
 
 }

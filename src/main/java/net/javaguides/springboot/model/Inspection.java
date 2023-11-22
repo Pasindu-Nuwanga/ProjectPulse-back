@@ -25,6 +25,7 @@ public class Inspection {
     @Lob
     private byte[] fileAttachment;
 
+    @Column(name = "file_name", unique = true)
     private String fileName;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

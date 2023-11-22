@@ -53,6 +53,7 @@ public class UserRegistrationController {
 		}
 	}
 
+	//User Profile
 	@GetMapping("/home/{userId}")
 	public ResponseEntity<User> getUserProfile(@PathVariable Integer userId) {
 		// Retrieve user details based on the provided userId
@@ -67,10 +68,42 @@ public class UserRegistrationController {
 		}
 	}
 
+	//Get Users by projectId
 	@GetMapping("/users/{projectId}")
 	public List<User> getUsersByProjectId(@PathVariable Integer projectId) {
 		return userService.getUsersByProjectId(projectId);
 	}
+
+	//Edit User
+	@PutMapping("/users/edit/{userId}")
+	public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User updatedUser) {
+		// Fetch the existing user from the database
+		User existingUser = userService.getUserById(userId);
+
+		if (existingUser != null) {
+			// Update individual fields if provided in the request body
+			if (updatedUser.getFirstName() != null) {
+				existingUser.setFirstName(updatedUser.getFirstName());
+			}
+
+			if (updatedUser.getLastName() != null) {
+				existingUser.setLastName(updatedUser.getLastName());
+			}
+
+			if (updatedUser.getEmail() != null) {
+				existingUser.setEmail(updatedUser.getEmail());
+			}
+
+			// Update other fields as needed
+
+			// Save the updated user to the database
+			User updated = userService.updateUser(existingUser);
+			return new ResponseEntity<>(updated, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 
 	//Update Password
 	@PostMapping("/change-password")

@@ -30,6 +30,14 @@ public class User {
 	@JoinColumn(name = "project_id", referencedColumnName = "project_id")
 	private Project projects;
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	public User() {
 	}
 

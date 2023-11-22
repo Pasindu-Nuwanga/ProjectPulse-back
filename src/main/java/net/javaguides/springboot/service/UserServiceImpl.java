@@ -163,6 +163,23 @@ public class UserServiceImpl{
 		return userOptional.orElse(null); // Return null if user not found, handle it appropriately in your application
 	}
 
+	public User updateUser(User updatedUser) {
+		// Assuming user ID is not null
+		User existingUser = userRepository.findById(updatedUser.getUserId()).orElse(null);
+
+		if (existingUser != null) {
+			// Update the user details
+			existingUser.setFirstName(updatedUser.getFirstName());
+			existingUser.setLastName(updatedUser.getLastName());
+			existingUser.setEmail(updatedUser.getEmail());
+
+			// Save the updated user to the database
+			return userRepository.save(existingUser);
+		}
+
+		return null; // User not found
+	}
+
 	@Transactional
 	public void changePassword(String userEmail, String oldPassword, String newPassword) {
 		try {
@@ -199,32 +216,9 @@ public class UserServiceImpl{
 		}
 	}
 
-
 	public Boolean oldPasswordIsValid (User user, String oldPassword){
 		return passwordEncoder.matches(oldPassword, user.getPassword());
 	}
-
-	//	public User loginUser(LoginDto loginDto) {
-//		try {
-//			User user = userRepository.findByEmail(loginDto.getEmail());
-//			if (user != null) {
-//				String password = loginDto.getPassword();
-//				String encodedPassword = user.getPassword();
-//				boolean isPasswordCorrect = passwordEncoder.matches(password, encodedPassword);
-//				if (isPasswordCorrect) {
-//					Optional<User> user1 = userRepository.findOneByEmailAndPassword(loginDto.getEmail(), encodedPassword);
-//					if (user1.isPresent()) {
-//						return user; // Return the user object upon successful login
-//					}
-//				}
-//			}
-//			throw new RuntimeException("Invalid email or password.");
-//		} catch (Exception ex) {
-//			// Log the exception for debugging purposes
-//			ex.printStackTrace(); // Print the stack trace to console or log it using a logging framework
-//			throw new RuntimeException("An error occurred during login.");
-//		}
-//	}
 
 
 }

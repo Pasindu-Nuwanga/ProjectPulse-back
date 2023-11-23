@@ -17,6 +17,16 @@ public class InspectionResultDto {
     private String comments;
     private MultipartFile defectFileAttachment;
 
+    private String defectFileName;
+
+    public String getDefectFileName() {
+        return defectFileName;
+    }
+
+    public void setDefectFileName(String defectFileName) {
+        this.defectFileName = defectFileName;
+    }
+
     public InspectionResultDto() {
     }
 

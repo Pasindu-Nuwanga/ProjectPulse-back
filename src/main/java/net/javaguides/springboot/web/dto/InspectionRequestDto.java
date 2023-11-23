@@ -13,6 +13,16 @@ public class InspectionRequestDto {
     private String constructionType;
     private MultipartFile fileAttachment;
 
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date inspectionRequestDate;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

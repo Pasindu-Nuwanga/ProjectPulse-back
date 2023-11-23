@@ -18,4 +18,8 @@ public interface InspectionRepository extends JpaRepository<Inspection, Integer>
 
     List<Inspection> findByPhasesPhaseId(Integer phaseId);
 
+    Boolean existsByInspectionNameAndPhases(String inspectionName, Phase phases);
+
+    Boolean existsByFileNameAndPhases(String fileName, Phase phases);
+
 }

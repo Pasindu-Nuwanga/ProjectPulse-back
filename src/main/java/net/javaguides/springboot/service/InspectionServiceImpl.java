@@ -1,5 +1,7 @@
 package net.javaguides.springboot.service;
 
+import net.javaguides.springboot.exception.DuplicateFileNameException;
+import net.javaguides.springboot.exception.DuplicateInspectionNameException;
 import net.javaguides.springboot.model.Document;
 import net.javaguides.springboot.model.Inspection;
 import net.javaguides.springboot.model.Phase;
@@ -33,6 +35,18 @@ public class InspectionServiceImpl {
     public Inspection submitInspectionRequest(InspectionRequestDto requestDto) throws IOException {
         Phase phase = phaseRepository.findByPhaseName(requestDto.getPhaseName());
 
+        // Check if an inspection with the same name already exists
+        if (inspectionRepository.existsByInspectionNameAndPhases(requestDto.getInspectionName(), phase)) {
+            // Throw an exception or return an error response
+            throw new DuplicateInspectionNameException("An inspection with the same name already exists in this phase.");
+        }
+
+        // Check if an inspection with the same fileName already exists
+        if (inspectionRepository.existsByFileNameAndPhases(requestDto.getFileName(), phase)) {
+            // Throw an exception or return an error response
+            throw new DuplicateFileNameException("A file with the same name already exists in this phase.");
+        }
+
         Inspection inspection = new Inspection();
         inspection.setInspectionName(requestDto.getInspectionName());
         inspection.setPhaseSection(requestDto.getPhaseSection());
@@ -45,15 +59,24 @@ public class InspectionServiceImpl {
             inspection.setInspectionDate(requestDto.getInspectionDate());
         }
 
+        // Set fileName and handle fileAttachment logic
         MultipartFile fileAttachment = requestDto.getFileAttachment();
         if (fileAttachment != null && !fileAttachment.isEmpty()) {
             String originalFileName = StringUtils.cleanPath(fileAttachment.getOriginalFilename());
+
+            // Check if an inspection with the same fileName already exists for the given phase
+            if (inspectionRepository.existsByFileNameAndPhases(originalFileName, phase)) {
+                // Throw an exception or return an error response
+                throw new DuplicateFileNameException("A file with the same name already exists in this phase.");
+            }
+
             inspection.setFileName(originalFileName);
             inspection.setFileAttachment(fileAttachment.getBytes());
         }
 
         return inspectionRepository.save(inspection);
     }
+
 
 
     public List<Inspection> getAllInspectionRequests() {

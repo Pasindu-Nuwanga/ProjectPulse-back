@@ -1,6 +1,7 @@
 package net.javaguides.springboot.repository;
 
 import net.javaguides.springboot.model.Inspection;
+import net.javaguides.springboot.model.Phase;
 import net.javaguides.springboot.model.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,5 +18,4 @@ public interface ResultRepository extends JpaRepository<Result, Integer> {
     List<Result> findByInspectionsInspectionName(String inspectionName);
 
     public List<Result> findByInspectionsPhasesPhaseId(Integer phaseId);
-
 }

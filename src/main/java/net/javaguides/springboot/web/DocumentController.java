@@ -7,6 +7,7 @@ import net.javaguides.springboot.web.dto.DocumentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +36,11 @@ public class DocumentController {
     //Upload Files
     @PostMapping("/uploadFile")
     public DocumentDto uploadFile(@RequestParam("file") MultipartFile file,
-                                  @RequestParam("phaseName") String phaseName) {
+                                  @RequestParam("phaseName") String phaseName,
+                                  @RequestParam("uploadDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date uploadDate,
+                                  @RequestParam("alertMessage") String alertMessage) {
 
-        Document document = documentService.storeFile(file, phaseName);
+        Document document = documentService.storeFile(file, phaseName, uploadDate, alertMessage);
 
         String fileDownloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
@@ -45,17 +49,18 @@ public class DocumentController {
 
         return new DocumentDto(document.getDocumentId().toString(), document.getDocumentName(),
                 fileDownloadUrl, document.getDocumentType(), (long) document.getData().length,
-                document.getPhases().getPhaseName());
+                document.getPhases().getPhaseName(), document.getUploadDate(), document.getAlertMessage());
     }
-
 
     @PostMapping("/uploadMultipleFiles")
     public List<DocumentDto> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files,
-                                                 @RequestParam("phaseId") String phaseName) {
+                                                 @RequestParam("phaseId") String phaseName,
+                                                 @RequestParam("uploadDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date uploadDate,
+                                                 @RequestParam("alertMessage") String alertMessage) {
         List<DocumentDto> uploadedFiles = new ArrayList<>();
 
         for (MultipartFile file : files) {
-            DocumentDto documentDto = uploadFile(file, phaseName);
+            DocumentDto documentDto = uploadFile(file, phaseName, uploadDate, alertMessage);
             uploadedFiles.add(documentDto);
         }
 
@@ -87,7 +92,7 @@ public class DocumentController {
                                 .path(document.getDocumentId())
                                 .toUriString(),
                         document.getDocumentType(), (long) document.getData().length,
-                         document.getPhases().getPhaseName()))
+                         document.getPhases().getPhaseName(), document.getUploadDate(), document.getAlertMessage()))
                 .collect(Collectors.toList());
     }
 
@@ -107,6 +112,12 @@ public class DocumentController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Failed to delete the file: " + e.getMessage());
         }
+    }
+
+    // Get All Alert Messages
+    @GetMapping("/getAllAlertMessages")
+    public List<String> getAllAlertMessages() {
+        return documentService.getAllAlertMessages();
     }
 
 
